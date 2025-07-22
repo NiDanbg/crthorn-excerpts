@@ -1,0 +1,16 @@
+name: Daily Medium Post
+on:
+  schedule:
+    - cron: "0 6 * * *"   # 06:00 UTC всеки ден
+  workflow_dispatch:      # ръчно пускане
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install requests
+      - run: python upload.py
+        env:
+          MEDIUM_TOKEN: ${{ secrets.MEDIUM_TOKEN }}
